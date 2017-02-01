@@ -19,7 +19,6 @@ namespace ConsoleApplication2
 
         List<Task> reindeerTask = new List<Task>();
         List<Task> elfTask = new List<Task>();
-        List<Thread> abortions = new List<Thread>();
 
         // ############################## SANTA THE HANDLER ##############################
 
@@ -129,7 +128,6 @@ namespace ConsoleApplication2
         private Task elfWork()
         {
             return Task.Run(() => {
-                abortions.Add(Thread.CurrentThread);
                 Random r = new Random();
                 Thread.Sleep(r.Next(3000, 100000));
                 Console.WriteLine(". . . . . . . . . . . . . . . . . . . .Elf has a problem");
