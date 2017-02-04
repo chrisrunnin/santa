@@ -11,9 +11,9 @@ namespace ConsoleApplication2
         static void Main(string[] args)
         {
             Program prog = new Program();
-#pragma warning disable CS4014 // Da dieser Aufruf nicht abgewartet wird, wird die Ausführung der aktuellen Methode fortgesetzt, bevor der Aufruf abgeschlossen ist
+#pragma warning disable CS4014
             prog.santaAsync();
-#pragma warning restore CS4014 // Da dieser Aufruf nicht abgewartet wird, wird die Ausführung der aktuellen Methode fortgesetzt, bevor der Aufruf abgeschlossen ist
+#pragma warning restore CS4014
             Thread.Sleep(120000);
         }
 
@@ -72,7 +72,7 @@ namespace ConsoleApplication2
         private void sendElfsToWork()
         {
             Console.WriteLine("Sending elfs back to work...");
-            if (!elfTask.Any())
+            if (!elfTask.Any()) // initial creation of elfs
             {
                 for (int i = 0; i < 12; i++)
                 {
@@ -83,7 +83,7 @@ namespace ConsoleApplication2
             }
             else
             {
-                while (elfTask.Count < 12)
+                while (elfTask.Count < 12) //filling up missing elfs
                 {
                     elfTask.Add(Task.Run(() => elfWork()));
                 }
@@ -121,6 +121,9 @@ namespace ConsoleApplication2
             return Task.Run(() => {
                 Random r = new Random();
                 Thread.Sleep(r.Next(3000, 10000));
+                /* Could be Task.Delay ,but Thread.Sleep should force
+                 * ThreadPool to put the Task in its own Thread
+                 */
                 Console.WriteLine(" . . . . . . . . . . . . . . . . . . . .Reindeer is back");
             });
         }
