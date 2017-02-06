@@ -26,27 +26,30 @@ namespace ConsoleApplication2
         {
             bool flag = true;
             Task elfs, reindeer, task;
-            sendElfsToWork();
 
+            sendElfsToWork();
             elfs = elfsAsync();
 
             while (true)
             {
                 christmasWork();
                 releaseTheReindeer();
+                reindeer = reindeerAsync();
 
                 if (!flag) { 
                     elfs = elfsAsync();
                     flag = false;
                 }
-                reindeer = reindeerAsync();
+ 
                 task = await Task.WhenAny(elfs, reindeer);
 
                 while(task != reindeer) { 
                     problemSolving();
                     sendElfsToWork();
                     elfs = elfsAsync();
+
                     task = await Task.WhenAny(elfs, reindeer);
+
                     if(task == reindeer)
                     {
                         flag = true;
